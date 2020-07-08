@@ -52,6 +52,12 @@ func defaultFormattedStringGenerators(generator *rangedTextGenerator) map[string
 
 		"byte": base64.GenerateBase64Text,
 		"html": html.GenerateHTML,
+		"loripsum-full": func(int, int) string {
+			return loripsum(generator.loripsumLength, "full")
+		},
+		"loripsum-plain": func(int, int) string {
+			return loripsum(generator.loripsumLength, "plain")
+		},
 	}
 }
 

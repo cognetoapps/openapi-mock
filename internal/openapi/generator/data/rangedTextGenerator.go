@@ -4,6 +4,7 @@ import "syreclabs.com/go/faker"
 
 type rangedTextGenerator struct {
 	random randomGenerator
+	loripsumLength string
 }
 
 func (generator *rangedTextGenerator) generateRangedText(minLength int, maxLength int) string {

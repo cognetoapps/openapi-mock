@@ -23,7 +23,7 @@ func New(options Options) MediaGenerator {
 	}
 
 	generatorsByType := map[string]schemaGenerator{
-		"string":  newStringGenerator(random),
+		"string":  newStringGenerator(random, options.LoripsumLength),
 		"boolean": &booleanGenerator{random: random},
 		"integer": &integerGenerator{
 			random:         random,

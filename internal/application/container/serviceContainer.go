@@ -39,6 +39,8 @@ func New(configuration *config.Configuration) Container {
 func (container *serviceContainer) init() {
 	openapi3.DefineStringFormat("uuid", openapi3.FormatOfStringForUUIDOfRFC4122)
 	openapi3.DefineStringFormat("html", "<[^>]+>|&[^;]+;")
+	openapi3.DefineStringFormat("loripsum-full", "<[^>]+>|&[^;]+;")
+	openapi3.DefineStringFormat("loripsum-plain", "\\w+")
 }
 
 func (container *serviceContainer) GetLogger() logrus.FieldLogger {
@@ -57,6 +59,7 @@ func (container *serviceContainer) CreateHTTPHandler(router *openapi3filter.Rout
 		DefaultMaxInt:   container.configuration.DefaultMaxInt,
 		DefaultMinFloat: container.configuration.DefaultMinFloat,
 		DefaultMaxFloat: container.configuration.DefaultMaxFloat,
+		LoripsumLength: container.configuration.LoripsumLength,
 		SuppressErrors:  container.configuration.SuppressErrors,
 	}
 

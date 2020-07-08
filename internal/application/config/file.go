@@ -34,6 +34,7 @@ type generationConfiguration struct {
 	DefaultMaxFloat *float64 `json:"default_max_float" yaml:"default_max_float"`
 	DefaultMinInt   *int64   `json:"default_min_int" yaml:"default_min_int"`
 	DefaultMaxInt   *int64   `json:"default_max_int" yaml:"default_max_int"`
+	LoripsumLength  string   `json:"loripsum_length" yaml:"loripsum_length"`
 	NullProbability *float64 `json:"null_probability" yaml:"null_probability"`
 	SuppressErrors  bool     `json:"suppress_errors" yaml:"suppress_errors"`
 	UseExamples     string   `json:"use_examples" yaml:"use_examples" valid:"in(no|if_present|exclusively)"`

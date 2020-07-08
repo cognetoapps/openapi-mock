@@ -95,6 +95,7 @@ func createApplicationConfiguration(fileConfig *fileConfiguration) *Configuratio
 
 		UseExamples:     parseUseExamples(fileConfig.Generation.UseExamples),
 		NullProbability: defaultOnNilFloat(fileConfig.Generation.NullProbability, DefaultNullProbability),
+		LoripsumLength: defaultOnEmptyString(fileConfig.Generation.LoripsumLength, DefaultLoripsumLength),
 		DefaultMinInt:   defaultOnNilInt64(fileConfig.Generation.DefaultMinInt, 0),
 		DefaultMaxInt:   defaultOnNilInt64(fileConfig.Generation.DefaultMaxInt, DefaultMaxInt),
 		DefaultMinFloat: defaultOnNilFloat(fileConfig.Generation.DefaultMinFloat, DefaultMinFloat),

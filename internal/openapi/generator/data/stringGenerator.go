@@ -14,9 +14,10 @@ type stringGenerator struct {
 	formatGenerators map[string]stringGeneratorFunction
 }
 
-func newStringGenerator(random randomGenerator) schemaGenerator {
+func newStringGenerator(random randomGenerator, loripsumLength string) schemaGenerator {
 	generator := &rangedTextGenerator{
 		random: random,
+		loripsumLength: loripsumLength,
 	}
 
 	return &stringGenerator{

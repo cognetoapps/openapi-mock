@@ -28,6 +28,7 @@ type Configuration struct {
 	DefaultMaxInt   int64
 	DefaultMinFloat float64
 	DefaultMaxFloat float64
+	LoripsumLength string
 	SuppressErrors  bool
 }
 
@@ -35,6 +36,7 @@ const (
 	DefaultPort            = uint16(8080)
 	DefaultResponseTimeout = time.Second
 	DefaultLogLevel        = logrus.InfoLevel
+	DefaultLoripsumLength     = "medium"
 	DefaultNullProbability = 0.5
 	DefaultMaxInt          = int64(math.MaxInt32)
 	DefaultMinFloat        = -float64(math.MaxInt32 / 2)

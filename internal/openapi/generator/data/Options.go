@@ -7,6 +7,7 @@ type Options struct {
 	DefaultMaxInt   int64
 	DefaultMinFloat float64
 	DefaultMaxFloat float64
+	LoripsumLength string
 	SuppressErrors  bool
 }
 
