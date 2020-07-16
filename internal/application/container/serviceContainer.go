@@ -1,6 +1,10 @@
 package container
 
 import (
+	"log"
+	"net/http"
+	"os"
+
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/getkin/kin-openapi/openapi3filter"
 	"github.com/gorilla/handlers"
@@ -14,9 +18,6 @@ import (
 	"github.com/muonsoft/openapi-mock/internal/server/middleware"
 	"github.com/sirupsen/logrus"
 	"github.com/unrolled/secure"
-	"log"
-	"net/http"
-	"os"
 )
 
 type serviceContainer struct {
@@ -59,7 +60,7 @@ func (container *serviceContainer) CreateHTTPHandler(router *openapi3filter.Rout
 		DefaultMaxInt:   container.configuration.DefaultMaxInt,
 		DefaultMinFloat: container.configuration.DefaultMinFloat,
 		DefaultMaxFloat: container.configuration.DefaultMaxFloat,
-		LoripsumLength: container.configuration.LoripsumLength,
+		LoripsumLength:  container.configuration.LoripsumLength,
 		SuppressErrors:  container.configuration.SuppressErrors,
 	}
 
@@ -83,6 +84,11 @@ func (container *serviceContainer) CreateHTTPHandler(router *openapi3filter.Rout
 	httpHandler = secureMiddleware.Handler(httpHandler)
 	httpHandler = middleware.ContextLoggerHandler(container.logger, httpHandler)
 	httpHandler = middleware.TracingHandler(httpHandler)
+	if container.configuration.InjectDelay {
+		httpHandler = middleware.DelayHandler(container.logger, httpHandler,
+			container.configuration.DelayExpRate,
+			container.configuration.DelayMinFloat)
+	}
 	httpHandler = handlers.CombinedLoggingHandler(os.Stdout, httpHandler)
 	httpHandler = handlers.RecoveryHandler(
 		handlers.RecoveryLogger(container.logger),

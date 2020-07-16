@@ -1,13 +1,14 @@
 package config
 
 import (
-	"github.com/asaskevich/govalidator"
-	"github.com/muonsoft/openapi-mock/internal/openapi/generator/data"
-	"github.com/sirupsen/logrus"
 	"os"
 	"path/filepath"
 	"strings"
 	"time"
+
+	"github.com/asaskevich/govalidator"
+	"github.com/muonsoft/openapi-mock/internal/openapi/generator/data"
+	"github.com/sirupsen/logrus"
 )
 
 func Load(filename string) (*Configuration, error) {
@@ -69,6 +70,13 @@ func autocorrectValues(filename string, fileConfig *fileConfiguration) {
 		fileConfig.HTTP.ResponseTimeout = DefaultResponseTimeout.Seconds()
 	}
 
+	if fileConfig.HTTP.DelayExpRate <= 0.0 {
+		fileConfig.HTTP.DelayExpRate = 1.0
+	}
+	if fileConfig.HTTP.DelayMinFloat < 0.0 {
+		fileConfig.HTTP.DelayExpRate = 0
+	}
+
 	if specificationURLIsRelativeFilename(filename, fileConfig) {
 		fileConfig.OpenAPI.SpecificationURL = filepath.Dir(filename) + "/" + fileConfig.OpenAPI.SpecificationURL
 	}
@@ -88,6 +96,9 @@ func createApplicationConfiguration(fileConfig *fileConfiguration) *Configuratio
 		CORSEnabled:     fileConfig.HTTP.CORSEnabled,
 		Port:            defaultOnNilUint16(fileConfig.HTTP.Port, DefaultPort),
 		ResponseTimeout: time.Duration(fileConfig.HTTP.ResponseTimeout * float64(time.Second)),
+		InjectDelay:     fileConfig.HTTP.InjectDelay,
+		DelayExpRate:    fileConfig.HTTP.DelayExpRate,
+		DelayMinFloat:   fileConfig.HTTP.DelayMinFloat,
 
 		Debug:     fileConfig.Application.Debug,
 		LogFormat: fileConfig.Application.LogFormat,
@@ -95,7 +106,7 @@ func createApplicationConfiguration(fileConfig *fileConfiguration) *Configuratio
 
 		UseExamples:     parseUseExamples(fileConfig.Generation.UseExamples),
 		NullProbability: defaultOnNilFloat(fileConfig.Generation.NullProbability, DefaultNullProbability),
-		LoripsumLength: defaultOnEmptyString(fileConfig.Generation.LoripsumLength, DefaultLoripsumLength),
+		LoripsumLength:  defaultOnEmptyString(fileConfig.Generation.LoripsumLength, DefaultLoripsumLength),
 		DefaultMinInt:   defaultOnNilInt64(fileConfig.Generation.DefaultMinInt, 0),
 		DefaultMaxInt:   defaultOnNilInt64(fileConfig.Generation.DefaultMaxInt, DefaultMaxInt),
 		DefaultMinFloat: defaultOnNilFloat(fileConfig.Generation.DefaultMinFloat, DefaultMinFloat),

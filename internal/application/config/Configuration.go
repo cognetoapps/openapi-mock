@@ -1,10 +1,11 @@
 package config
 
 import (
-	"github.com/muonsoft/openapi-mock/internal/openapi/generator/data"
-	"github.com/sirupsen/logrus"
 	"math"
 	"time"
+
+	"github.com/muonsoft/openapi-mock/internal/openapi/generator/data"
+	"github.com/sirupsen/logrus"
 )
 
 type Configuration struct {
@@ -15,6 +16,10 @@ type Configuration struct {
 	CORSEnabled     bool
 	Port            uint16
 	ResponseTimeout time.Duration
+	InjectDelay     bool
+	DelayExpRate    float64
+	DelayMinFloat   float64
+	MaxRandDelay    float64
 
 	// Application options
 	Debug     bool
@@ -28,7 +33,7 @@ type Configuration struct {
 	DefaultMaxInt   int64
 	DefaultMinFloat float64
 	DefaultMaxFloat float64
-	LoripsumLength string
+	LoripsumLength  string
 	SuppressErrors  bool
 }
 
@@ -36,7 +41,7 @@ const (
 	DefaultPort            = uint16(8080)
 	DefaultResponseTimeout = time.Second
 	DefaultLogLevel        = logrus.InfoLevel
-	DefaultLoripsumLength     = "medium"
+	DefaultLoripsumLength  = "medium"
 	DefaultNullProbability = 0.5
 	DefaultMaxInt          = int64(math.MaxInt32)
 	DefaultMinFloat        = -float64(math.MaxInt32 / 2)

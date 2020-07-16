@@ -1,8 +1,9 @@
 package config
 
 import (
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
+
+	"gopkg.in/yaml.v2"
 )
 
 type fileConfiguration struct {
@@ -21,6 +22,9 @@ type httpConfiguration struct {
 	Port            *uint16 `json:"port" yaml:"port" valid:"range(1|65535)"`
 	CORSEnabled     bool    `json:"cors_enabled" yaml:"cors_enabled"`
 	ResponseTimeout float64 `json:"response_timeout" yaml:"response_timeout"`
+	InjectDelay     bool    `json:"inject_delay" yaml:"inject_delay"`
+	DelayExpRate    float64 `json:"delay_exp_rate" yaml:"delay_exp_rate"`
+	DelayMinFloat   float64 `json:"delay_min_float" yaml:"delay_min_float"`
 }
 
 type applicationConfiguration struct {

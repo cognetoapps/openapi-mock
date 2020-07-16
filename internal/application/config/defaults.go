@@ -1,5 +1,13 @@
 package config
 
+func defaultOnNilBool(v *bool, defaultValue bool) bool {
+	if v == nil {
+		return defaultValue
+	}
+
+	return *v
+}
+
 func defaultOnNilUint16(v *uint16, defaultValue uint16) uint16 {
 	if v == nil {
 		return defaultValue
